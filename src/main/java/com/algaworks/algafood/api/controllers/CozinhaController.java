@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,9 +25,9 @@ public class CozinhaController {
 	
 	@PostMapping(value = "/criar")
 	public ResponseEntity<Cozinha> adicionar(@RequestBody Cozinha cozinha) {
-		Cozinha cozinhaObj = repository.salvar(cozinha);
+		Cozinha novaCozinha = repository.salvar(cozinha);
 		
-		return ResponseEntity.status(HttpStatus.CREATED).body(cozinhaObj);
+		return ResponseEntity.status(HttpStatus.CREATED).body(novaCozinha);
 	}
 	
 	@GetMapping
@@ -38,12 +39,28 @@ public class CozinhaController {
 	public ResponseEntity<Cozinha> buscar(@PathVariable Long id) {
 		Cozinha cozinha = repository.buscar(id);
 		
-		if (cozinha != null ) {
-			return ResponseEntity.status(HttpStatus.OK).body(cozinha);
+		if (cozinha == null ) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 		
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		return ResponseEntity.status(HttpStatus.OK).body(cozinha);
 		
+	}
+	
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<Cozinha> atualizar(@PathVariable Long id, @RequestBody Cozinha cozinha) {
+		Cozinha cozinhaAtual = repository.buscar(id);
+		
+		if (cozinhaAtual == null) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+		
+		cozinhaAtual.setNome(cozinha.getNome());
+		//Igual a cozinhaAtual.name = name;
+		
+		repository.salvar(cozinhaAtual);
+		
+		return ResponseEntity.status(HttpStatus.OK).body(cozinhaAtual);
 	}
 	
 }
