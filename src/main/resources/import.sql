@@ -1,20 +1,20 @@
-INSERT INTO cozinha (id, nome) VALUES (1, 'Tailandesa');
-INSERT INTO cozinha (id, nome) VALUES (2, 'Chinesa');
-INSERT INTO cozinha (id, nome) VALUES (3, 'Arabe');
+INSERT INTO cozinha (nome) VALUES ('Tailandesa');
+INSERT INTO cozinha (nome) VALUES ('Chinesa');
+INSERT INTO cozinha (nome) VALUES ('Arabe');
 
-INSERT INTO restaurante (id, nome, taxa_frete, cozinha_id) VALUES (1, 'Thai Delivery', 20, 1);
-INSERT INTO restaurante (id, nome, taxa_frete, cozinha_id) VALUES (2, 'China Gourmet', 18, 2);
-INSERT INTO restaurante (id, nome, taxa_frete, cozinha_id) VALUES (3, 'Tur', 12, 3);
-
-
-INSERT INTO estado (id, nome) VALUES (1, 'Paraíba');
-
-INSERT INTO cidade (id, nome, estado_id) VALUES (1, 'João Pessoa', 1);
-INSERT INTO cidade (id, nome, estado_id) VALUES (2, 'Campina Grande', 1);
+INSERT INTO restaurante (nome, taxa_frete, cozinha_id) VALUES ('Thai Delivery', 20, 1);
+INSERT INTO restaurante (nome, taxa_frete, cozinha_id) VALUES ('China Gourmet', 18, 2);
+INSERT INTO restaurante (nome, taxa_frete, cozinha_id) VALUES ('Tur', 12, 3);
 
 
-INSERT INTO forma_pagamento (id, descricao) VALUES (1, 'Cartão de Crédito');
-INSERT INTO forma_pagamento (id, descricao) VALUES (2, 'Dinheiro');
+INSERT INTO estado (nome) VALUES ('Paraíba');
 
-INSERT INTO permissao (id, nome, descricao) VALUES (1, 'CONSULTAR_COZINHAS', 'Permite consultar cozinhas');
-INSERT INTO permissao (id, nome, descricao) VALUES (2, 'EDITAR_COZINHAS', 'Permite editar cozinhas');
+INSERT INTO cidade (nome, estado_id) VALUES ('João Pessoa', 1);
+INSERT INTO cidade (nome, estado_id) VALUES ('Campina Grande', 1);
+
+
+INSERT INTO forma_pagamento (descricao) VALUES ('Cartão de Crédito');
+INSERT INTO forma_pagamento (descricao) VALUES ('Dinheiro');
+
+INSERT INTO permissao (nome, descricao) VALUES ('CONSULTAR_COZINHAS', 'Permite consultar cozinhas');
+INSERT INTO permissao (nome, descricao) VALUES ('EDITAR_COZINHAS', 'Permite editar cozinhas');
