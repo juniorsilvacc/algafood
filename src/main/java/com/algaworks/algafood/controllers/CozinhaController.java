@@ -63,7 +63,6 @@ public class CozinhaController {
 		}
 		
 		cozinhaAtual.setNome(cozinha.getNome());
-		//Igual a cozinhaAtual.name = name;
 		
 		repository.salvar(cozinhaAtual);
 		
