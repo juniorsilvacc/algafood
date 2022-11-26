@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.algaworks.algafood.domain.model.Cozinha;
 import com.algaworks.algafood.domain.repository.CozinhaRepository;
+import com.algaworks.algafood.domain.service.CadastroCozinhaService;
 
 @RestController
 @RequestMapping(value = "/cozinhas")
@@ -25,9 +26,12 @@ public class CozinhaController {
 	@Autowired
 	private CozinhaRepository repository;
 	
+	@Autowired
+	private CadastroCozinhaService cadastroService;
+	
 	@PostMapping(value = "/criar")
 	public ResponseEntity<Cozinha> adicionar(@RequestBody Cozinha cozinha) {
-		Cozinha novaCozinha = repository.salvar(cozinha);
+		Cozinha novaCozinha = cadastroService.salvar(cozinha);
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(novaCozinha);
 	}
