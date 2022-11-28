@@ -9,35 +9,35 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.algaworks.algafood.domain.model.Cozinha;
-import com.algaworks.algafood.domain.repository.CozinhaRepository;
+import com.algaworks.algafood.domain.model.Gastronomy;
+import com.algaworks.algafood.domain.repository.GastronomyRepository;
 
 @Component
-public class CozinhaRepositoryImple implements CozinhaRepository {
+public class GastronomyRepositoryImplementations implements GastronomyRepository {
 
 	@PersistenceContext
 	private EntityManager manager;
 	
 	@Override
-	public List<Cozinha> listar() {
-		return manager.createQuery("from Cozinha" , Cozinha.class).getResultList();
+	public List<Gastronomy> findAll() {
+		return manager.createQuery("from Gastronomy" , Gastronomy.class).getResultList();
 	}
 	
 	@Override
-	public Cozinha buscar(Long id) {
-		return manager.find(Cozinha.class, id);
-	}
-	
-	@Transactional
-	@Override
-	public Cozinha salvar(Cozinha cozinha) {
-		return manager.merge(cozinha);
+	public Gastronomy findById(Long id) {
+		return manager.find(Gastronomy.class, id);
 	}
 	
 	@Transactional
 	@Override
-	public void remover(Long id) {
-		Cozinha cozinha = buscar(id);
+	public Gastronomy save(Gastronomy gastronomy) {
+		return manager.merge(gastronomy);
+	}
+	
+	@Transactional
+	@Override
+	public void remove(Long id) {
+		Gastronomy cozinha = findById(id);
 		
 		if(cozinha == null) {
 			throw new EmptyResultDataAccessException(1);
