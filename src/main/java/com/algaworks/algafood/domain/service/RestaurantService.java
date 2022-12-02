@@ -3,6 +3,7 @@ package com.algaworks.algafood.domain.service;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,13 +32,13 @@ public class RestaurantService {
 	
 	public Restaurant save(Restaurant restaurant) {
 		Long gastronomyId = restaurant.getGastronomy().getId();
-		Gastronomy gastronomy = repositoryGastronomy.findById(gastronomyId);
+		Optional<Gastronomy> gastronomy = repositoryGastronomy.findById(gastronomyId);
 		
-		if(gastronomy == null) {
+		if(gastronomy.isEmpty()) {
 			throw new EntityNotFoundException(String.format("Não existe cadastro de restaurante com código %d", gastronomyId));
 		}
 		
-		restaurant.setGastronomy(gastronomy);
+		restaurant.setGastronomy(gastronomy.get());
 		
 		return repositoryRestaurant.save(restaurant);
 	}

@@ -1,6 +1,7 @@
 package com.algaworks.algafood.domain.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,31 +29,31 @@ public class GastronomyService {
 	}
 	
 	public Gastronomy find(Long id) {
-		Gastronomy gastronomy = gastronomyRepository.findById(id);
+		Optional<Gastronomy> gastronomy = gastronomyRepository.findById(id);
 		
-		if(gastronomy == null) {
+		if(gastronomy.isEmpty()) {
 			throw new EntityNotFoundException(String.format("Não existe cadastro de cozinha com código %d", gastronomy));
 		}
 		
-		return gastronomy;
+		return gastronomy.get();
 	}
 	
 	public Gastronomy update(Long id, Gastronomy gastronomy) {
-		Gastronomy gastronomyObj = gastronomyRepository.findById(id);
+		Optional<Gastronomy> gastronomyObj = gastronomyRepository.findById(id);
 		
-		if(gastronomyObj == null) {
+		if(gastronomyObj.isEmpty()) {
 			throw new EntityNotFoundException(String.format("Não existe cadastro de restaurante com código %d", gastronomyObj));
 		}
 		
-		BeanUtils.copyProperties(gastronomy, gastronomyObj, "id");	
+		BeanUtils.copyProperties(gastronomy, gastronomyObj.get(), "id");	
 		
-		return gastronomyRepository.save(gastronomyObj);
+		return gastronomyRepository.save(gastronomyObj.get());
 	}
 	
 	public void remove(Long id) {
 		try {
 			
-			gastronomyRepository.remove(id);
+			gastronomyRepository.deleteById(id);
 			
 		} catch (EmptyResultDataAccessException e) {
 			throw new EntityNotFoundException(String.format(
