@@ -30,7 +30,7 @@ public class RestaurantService {
 	@Autowired
 	private GastronomyRepository repositoryGastronomy;
 	
-	public Restaurant save(Restaurant restaurant) {
+	public Restaurant save (Restaurant restaurant) {
 		Long gastronomyId = restaurant.getGastronomy().getId();
 		Optional<Gastronomy> gastronomy = repositoryGastronomy.findById(gastronomyId);
 		
@@ -43,36 +43,36 @@ public class RestaurantService {
 		return repositoryRestaurant.save(restaurant);
 	}
 	
-	public List<Restaurant> list() {
+	public List<Restaurant> list () {
 		return repositoryRestaurant.findAll();
 	}
 	
-	public Restaurant find(Long id) {
-		Restaurant restaurant = repositoryRestaurant.findById(id);
+	public Restaurant find (Long id) {
+		Optional<Restaurant> restaurant = repositoryRestaurant.findById(id);
 		
-		if(restaurant == null) {
+		if(restaurant.isEmpty()) {
 			throw new EntityNotFoundException(String.format("Não existe cadastro de restaurante com código %d", restaurant));
 		}
 		
-		return restaurant;
+		return restaurant.get();
 	}
 	
-	public Restaurant update(Long id, Restaurant restaurant) {
-		Restaurant restaurantObj = repositoryRestaurant.findById(id);
+	public Restaurant update (Long id, Restaurant restaurant) {
+		Optional<Restaurant> restaurantObj = repositoryRestaurant.findById(id);
 		
-		if(restaurantObj == null) {
+		if(restaurantObj.isEmpty()) {
 			throw new EntityNotFoundException(String.format("Não existe cadastro de restaurante com código %d", restaurantObj));
 		}
 		
-		BeanUtils.copyProperties(restaurant, restaurantObj, "id");	
+		BeanUtils.copyProperties(restaurant, restaurantObj.get(), "id");	
 		
-		return repositoryRestaurant.save(restaurantObj);
+		return repositoryRestaurant.save(restaurantObj.get());
 	}
 	
-	public void remove(Long id) {
+	public void remove (Long id) {
 		try {
 			
-			repositoryRestaurant.remove(id);
+			repositoryRestaurant.deleteById(id);
 			
 		} catch (EmptyResultDataAccessException e) {
 			throw new EntityNotFoundException(String.format(
@@ -85,15 +85,15 @@ public class RestaurantService {
 	}
 	
 	public Restaurant updatePartial(Long id, Map<String, Object> field) {
-		Restaurant restaurantCurrent = repositoryRestaurant.findById(id);
+		Optional<Restaurant> restaurantCurrent = repositoryRestaurant.findById(id);
 		
 		if(restaurantCurrent == null) {
 			throw new EntityNotFoundException(String.format("Não existe cadastro de restaurante com código %d", restaurantCurrent));
 		}
 		
-		merge(field, restaurantCurrent);
+		merge(field, restaurantCurrent.get());
 		
-		return update(id, restaurantCurrent);
+		return update(id, restaurantCurrent.get());
 		
 	}
 

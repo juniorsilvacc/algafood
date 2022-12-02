@@ -20,15 +20,15 @@ public class GastronomyService {
 	@Autowired
 	private GastronomyRepository gastronomyRepository;
 	
-	public Gastronomy save(Gastronomy gastronomy) {
+	public Gastronomy save (Gastronomy gastronomy) {
 		return gastronomyRepository.save(gastronomy);
 	}
 	
-	public List<Gastronomy> list() {
+	public List<Gastronomy> list () {
 		return gastronomyRepository.findAll();
 	}
 	
-	public Gastronomy find(Long id) {
+	public Gastronomy find (Long id) {
 		Optional<Gastronomy> gastronomy = gastronomyRepository.findById(id);
 		
 		if(gastronomy.isEmpty()) {
@@ -38,7 +38,7 @@ public class GastronomyService {
 		return gastronomy.get();
 	}
 	
-	public Gastronomy update(Long id, Gastronomy gastronomy) {
+	public Gastronomy update (Long id, Gastronomy gastronomy) {
 		Optional<Gastronomy> gastronomyObj = gastronomyRepository.findById(id);
 		
 		if(gastronomyObj.isEmpty()) {
@@ -50,7 +50,7 @@ public class GastronomyService {
 		return gastronomyRepository.save(gastronomyObj.get());
 	}
 	
-	public void remove(Long id) {
+	public void remove (Long id) {
 		try {
 			
 			gastronomyRepository.deleteById(id);
