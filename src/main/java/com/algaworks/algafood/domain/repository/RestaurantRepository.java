@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.algaworks.algafood.domain.model.Restaurant;
 
 @Repository
-public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
+public interface RestaurantRepository extends JpaRepository<Restaurant, Long>, RestaurantRepositoryQueries {
 
 }
